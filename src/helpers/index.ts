@@ -27,14 +27,20 @@ export const buildAppConfig = async (): Promise<TAppConfig> => {
       name: 'name',
       type: 'text',
       initial: 'my-app',
-      message: 'Enter App name:',
+      message: 'Enter name:',
       validate: value => isValidAppName(value),
     },
     {
       type: 'select',
       name: 'template',
-      message: 'Select App template',
+      message: 'Select template:',
       choices: TemplateChoices,
+    },
+    {
+      type: 'text',
+      name: 'version',
+      message: 'Enter version:',
+      initial: '1.0.0',
     },
   ]);
 };
@@ -53,4 +59,13 @@ export const copyTemplate = async (template: ETemplate, appName: string) => {
   await createDirectory(appName);
 
   await fsPromise.cp(templatePath, appName, { recursive: true });
+};
+
+export const updatePackageJson = async (appName: string, appConfig: TAppConfig) => {
+  const packageJsonPath = path.join(appName, 'package.json');
+  const packageJson = JSON.parse(await fsPromise.readFile(packageJsonPath, 'utf8'));
+  packageJson['name'] = appConfig.name;
+  packageJson['version'] = appConfig.version;
+
+  await fsPromise.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 };

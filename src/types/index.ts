@@ -6,6 +6,7 @@ export enum ETemplate {
 
 export type TAppConfig = {
   name: string;
+  version: string;
   template: ETemplate;
 };
 
