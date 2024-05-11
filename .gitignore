@@ -1,0 +1,12 @@
+package-lock.json
+
+/node_modules
+
+# IDEs and editors
+.vscode/*
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/

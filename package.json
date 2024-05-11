@@ -1,0 +1,22 @@
+{
+  "name": "@gark.6654/my-templates",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gark6654/my-templates.git"
+  },
+  "author": "gark6654",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gark6654/my-templates/issues"
+  },
+  "homepage": "https://github.com/gark6654/my-templates#readme",
+  "devDependencies": {
+    "unbuild": "^2.0.0"
+  }
+}
