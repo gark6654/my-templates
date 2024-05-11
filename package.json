@@ -10,6 +10,11 @@
   "bin": {
     "create-app": "index.js"
   },
+  "files": [
+    "index.js",
+    "template-*",
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gark6654/my-templates.git"
