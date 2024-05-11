@@ -1,5 +1,10 @@
+# dist
+/build
+
+# package managers
 /package-lock.json
 
+# dependencies
 /node_modules
 
 # IDEs and editors

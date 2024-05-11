@@ -1,13 +1,15 @@
-import { defineBuildConfig } from 'unbuild';
+import { BuildConfig, defineBuildConfig } from 'unbuild';
 
-defineBuildConfig({
+const rollupConfig: BuildConfig['rollup'] = {
+  esbuild: {
+    minify: true,
+  },
+};
+
+export default defineBuildConfig({
   clean: true,
-  entries: ['./src/index'],
   outDir: 'build',
   declaration: true,
-  rollup: {
-    esbuild: {
-      minify: true,
-    },
-  },
+  rollup: rollupConfig,
+  entries: ['./src/index'],
 });
