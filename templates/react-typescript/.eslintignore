@@ -1,0 +1,6 @@
+__tests__
+__mocks__
+public
+dist
+node_modules
+vite.config.ts
