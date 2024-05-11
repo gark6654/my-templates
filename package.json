@@ -1,6 +1,7 @@
 {
   "name": "@gark.6654/my-templates",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "build": "unbuild",
     "typecheck": "tsc --noEmit",
