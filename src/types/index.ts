@@ -4,6 +4,12 @@ export enum ETemplate {
   NEXTJS_TYPESCRIPT_STYLED_COMPONENTS = 'nextjs-typescript-styled-components',
 }
 
+export type TPromptData = {
+  name: string;
+  version: string;
+  template: ETemplate;
+};
+
 export type TAppConfig = {
   name: string;
   version: string;

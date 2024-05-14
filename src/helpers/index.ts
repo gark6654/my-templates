@@ -4,7 +4,7 @@ import fsPromise from 'node:fs/promises';
 import url from 'node:url';
 import prompts from 'prompts';
 
-import { ETemplate, TAppConfig } from '../types';
+import { ETemplate, TAppConfig, TPromptData } from '../types';
 import { TemplateChoices } from '../constants';
 
 // check if app name is valid
@@ -26,7 +26,7 @@ const getTemplatePath = (template: ETemplate): string => {
 };
 
 // prompt user for app name, template and version
-export const buildAppConfig = async (): Promise<TAppConfig> => {
+export const promptUser = async (): Promise<TPromptData> => {
   return await prompts([
     {
       name: 'name',
@@ -48,6 +48,25 @@ export const buildAppConfig = async (): Promise<TAppConfig> => {
       initial: '1.0.0',
     },
   ]);
+};
+
+// build app config from user input
+export const buildAppConfig = async (): Promise<TAppConfig> => {
+  const appConfig: TAppConfig = {
+    name: '',
+    version: '',
+    template: ETemplate.REACT_TYPESCRIPT,
+  };
+
+  const promptData = await promptUser();
+
+  Object.entries(promptData).forEach(([key, value]) => {
+    // todo => fix types...
+    // @ts-ignore
+    appConfig[key] = value;
+  });
+
+  return appConfig;
 };
 
 // create new directory for app
