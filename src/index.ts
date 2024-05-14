@@ -1,6 +1,6 @@
 import process from 'node:process';
 import { ETemplate, TAppConfig } from './types';
-import { buildAppConfig, copyTemplate, updatePackageJson } from './helpers';
+import { buildAppConfig, copyTemplate, generateTemplateConfig, updatePackageJson } from './helpers';
 
 const initApp = async () => {
   try {
@@ -14,7 +14,9 @@ const initApp = async () => {
 
     const appConfig = await buildAppConfig(initial);
 
-    await copyTemplate(appConfig.template, appConfig.name);
+    const templateConfig = generateTemplateConfig(appConfig.template, '0.0.1');
+
+    await copyTemplate(appConfig.name, templateConfig);
 
     await updatePackageJson(appConfig.name, appConfig);
 

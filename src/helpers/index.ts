@@ -4,7 +4,7 @@ import fsPromise from 'node:fs/promises';
 import url from 'node:url';
 import prompts from 'prompts';
 
-import { ETemplate, TAppConfig, TPromptData } from '../types';
+import { ETemplate, TAppConfig, TPromptData, TTemplateConfig } from '../types';
 import { TemplateChoices } from '../constants';
 
 // check if app name is valid
@@ -74,12 +74,25 @@ export const createDirectory = async (path: string) => {
   await fsPromise.mkdir(path);
 };
 
+// generate template config
+export const generateTemplateConfig = (template: ETemplate, version: string): TTemplateConfig => {
+  return {
+    version,
+    name: template,
+  };
+};
+
 // copy files from template to new app directory
-export const copyTemplate = async (template: ETemplate, appName: string) => {
-  const templatePath = getTemplatePath(template);
+export const copyTemplate = async (appName: string, templateConfig: TTemplateConfig) => {
+  const templatePath = getTemplatePath(templateConfig.name);
+  const templateConfigPath = path.join(appName, 'template.config.json');
 
   await createDirectory(appName);
 
+  // write template config to new app directory
+  await fsPromise.writeFile(templateConfigPath, JSON.stringify(templateConfig, null, 2));
+
+  // copy nested files
   await fsPromise.cp(templatePath, appName, { recursive: true });
 };
 
@@ -87,8 +100,9 @@ export const copyTemplate = async (template: ETemplate, appName: string) => {
 export const updatePackageJson = async (appName: string, appConfig: TAppConfig) => {
   const packageJsonPath = path.join(appName, 'package.json');
   const packageJson = JSON.parse(await fsPromise.readFile(packageJsonPath, 'utf8'));
-  packageJson['name'] = appConfig.name;
-  packageJson['version'] = appConfig.version;
+
+  packageJson.name = appConfig.name;
+  packageJson.version = appConfig.version;
 
   await fsPromise.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 };
