@@ -26,47 +26,43 @@ const getTemplatePath = (template: ETemplate): string => {
 };
 
 // prompt user for app name, template and version
-export const promptUser = async (): Promise<TPromptData> => {
+export const promptUser = async (initial: TPromptData): Promise<TPromptData> => {
+  const { name, version } = initial;
+
   return await prompts([
     {
       name: 'name',
       type: 'text',
-      initial: 'my-app',
+      initial: name,
       message: 'Enter name:',
       validate: value => isValidAppName(value),
     },
     {
       type: 'select',
       name: 'template',
-      message: 'Select template:',
       choices: TemplateChoices,
+      message: 'Select template:',
     },
     {
       type: 'text',
       name: 'version',
       message: 'Enter version:',
-      initial: '1.0.0',
+      initial: version,
     },
   ]);
 };
 
 // build app config from user input
-export const buildAppConfig = async (): Promise<TAppConfig> => {
-  const appConfig: TAppConfig = {
-    name: '',
-    version: '',
-    template: ETemplate.REACT_TYPESCRIPT,
-  };
-
-  const promptData = await promptUser();
+export const buildAppConfig = async (initialConfig: TAppConfig): Promise<TAppConfig> => {
+  const promptData = await promptUser(initialConfig);
 
   Object.entries(promptData).forEach(([key, value]) => {
     // todo => fix types...
     // @ts-ignore
-    appConfig[key] = value;
+    initialConfig[key] = value;
   });
 
-  return appConfig;
+  return initialConfig;
 };
 
 // create new directory for app
