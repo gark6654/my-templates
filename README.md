@@ -15,7 +15,7 @@ $ npm install @gark.6654/my-templates -g
 With NPM:
 
 ```bash
-$ npx @gark.6654/my-templates create-app "app-name"
+$ npx @gark.6654/my-templates create-app [app-name]
 ```
 
 Then follow the prompts!
