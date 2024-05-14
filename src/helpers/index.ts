@@ -17,12 +17,24 @@ const isDirectoryExists = (path: string): boolean => {
   return fs.existsSync(path);
 };
 
-// todo => set up versioning
 // get path to template directory
-const getTemplatePath = (template: ETemplate): string => {
+const getTemplatePath = (template: ETemplate, version: string): string => {
   const __filename = url.fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  return path.join(__dirname, `../templates/${template}`);
+
+  const templatePath = path.join(__dirname, `../templates/${template}`);
+
+  if (!isDirectoryExists(templatePath)) {
+    throw new Error(`Template ${template} not found!`);
+  }
+
+  const versionPath = path.join(templatePath, version);
+
+  if (!isDirectoryExists(versionPath)) {
+    throw new Error(`Version ${version} not found for template ${template}!`);
+  }
+
+  return versionPath;
 };
 
 // prompt user for app name, template and version
@@ -84,7 +96,7 @@ export const generateTemplateConfig = (template: ETemplate, version: string): TT
 
 // copy files from template to new app directory
 export const copyTemplate = async (appName: string, templateConfig: TTemplateConfig) => {
-  const templatePath = getTemplatePath(templateConfig.name);
+  const templatePath = getTemplatePath(templateConfig.name, templateConfig.version);
   const templateConfigPath = path.join(appName, 'template.config.json');
 
   await createDirectory(appName);

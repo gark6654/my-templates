@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 8080",
     "lint": "next lint",
-    "eslint:fix": "eslint . --fix",
+    "eslint:fix": "eslint .. --fix",
     "prepare": "husky install"
   },
   "dependencies": {

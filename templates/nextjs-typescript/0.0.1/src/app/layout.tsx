@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import '~/styles/globals.css';
+import '../styles/globals.css';
 
 interface IProps {
   children: ReactNode;

@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import StyledComponentsRegistry from '~/lib/registry';
+import StyledComponentsRegistry from '../lib/registry';
 
-import '~/styles/globals.css';
+import '../styles/globals.css';
 
 interface IProps {
   children: ReactNode;
